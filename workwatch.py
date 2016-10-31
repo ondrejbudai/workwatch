@@ -11,7 +11,11 @@ next(p.stdout)
 
 for line in p.stdout:
     line = line.decode()
-    date = datetime.strptime(line[:24], "%Y-%m-%dT%H:%M:%S%z" )
+    line = line[:24]
+    try:
+        date = datetime.strptime(line, "%Y-%m-%dT%H:%M:%S%z" )
+    except ValueError:
+        continue
     dates.append(date)
 
 pairs = zip(dates, dates[1:])
